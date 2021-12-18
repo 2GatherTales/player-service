@@ -33,5 +33,12 @@ out/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
-.vscode/
+
+*.properties
+
+*.yml
+
+# IDEA Files
+**/.idea/
+!/gradle/wrapper/gradle-wrapper.properties
+!gradle-wrapper.properties
