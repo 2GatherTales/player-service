@@ -47,7 +47,38 @@ public class Player implements Serializable {
     private Integer speed;
     @Column(name = "dmg")
     private Integer dmg;
+    @Column(name='lvl');
+    private Integer lvl;
+    @Column(name='str');
+    private Integer str;
 
+    private void calcHP(){
+        this.maxhp=this.lvl*this.hp;
+        this.restoreHP(100);
+    }
 
+    private void calcSTR(){
+        this.str=this.lvl*this.str;
+    }
 
+    private void calcSPD(){
+        this.spd = this.lvl * this.spd;
+    }
+
+    private void calcDMG(){
+        this.dmg = this.lvl * 5;
+    }
+
+    public void restoreHP(int percent=100){
+        if(percent==100){
+            this.hp=this.maxhp;
+            this.save();
+        }else{
+            this.hp+=(int)(this.maxhp*percent/100);
+            if(this.hp>this.maxhp)
+                this.hp=this.maxhp;
+
+            this.save();
+        }
+    }
 }
