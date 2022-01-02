@@ -16,7 +16,7 @@ public class PlayerServiceImpl implements GenericService<Player> {
     public Iterable<Player> findAll() { return playerRepository.findAll(); }
 
     @Override
-    public Player find(String id) { return (Player) playerRepository.findById(id).get(); }
+    public Player find(Long id) { return (Player) playerRepository.findById(id).get(); }
 
     @Override
     public Player create(Player player) {   return (Player) playerRepository.save(player); }
@@ -25,5 +25,5 @@ public class PlayerServiceImpl implements GenericService<Player> {
     public void update(Player player) { playerRepository.save(player); }
 
     @Override
-    public void delete(String id) { playerRepository.delete(id); }
+    public void delete(Long id) { playerRepository.delete(id); }
 }

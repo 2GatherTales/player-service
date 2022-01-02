@@ -1,5 +1,6 @@
 package com.gathertales.playerservice.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.JwtAccessTokenConverterConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +21,8 @@ public class CustomAccessTokenConverter implements AccessTokenConverter, JwtAcce
 
 	private boolean includeGrantType;
 
+	Token token_ = Token.INSTANCE.getInstance();
+
 	private UserAuthenticationConverter userTokenConverter = new CustomUserAuthenticationConverter();
 
 	@Override
@@ -29,6 +32,7 @@ public class CustomAccessTokenConverter implements AccessTokenConverter, JwtAcce
 	
 	public OAuth2AccessToken extractAccessToken(String value, Map<String, ?> map) {
 		DefaultOAuth2AccessToken token = new DefaultOAuth2AccessToken(value);
+		token_.setValue(value);
 		Map<String, Object> info = new HashMap<String, Object>(map);
 
 		info.remove(EXP);

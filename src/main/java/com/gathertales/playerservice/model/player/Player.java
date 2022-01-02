@@ -1,26 +1,18 @@
 package com.gathertales.playerservice.model.player;
 
-import com.google.common.primitives.Bytes;
-import com.vladmihalcea.hibernate.type.array.IntArrayType;
-import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name="player", schema = "avarum_game")
-@TypeDefs({
-        @TypeDef(
-                name = "int-array",
-                typeClass = IntArrayType.class
-        )
-})
+@TypeDef(name = "json", typeClass = JsonType.class)
 @Data
 public class Player implements Serializable {
     @Id
@@ -29,15 +21,13 @@ public class Player implements Serializable {
     private Long id;
     @Column(name = "userid")
     private Long userid;
-    @Column(name = "potion_chance")
-    private Short potionChance;
-    @Column(name = "potion_quantity")
-    private Short potionQuantity;
-    @Column(name = "potion_heal", columnDefinition = "integer[]")
-    @Type( type = "int-array" )
-    private Integer[] potionHeal;
+    @Column(name = "weaponid")
+    private Long weaponID;
 
-    @Column(name = "max_hp")
+    @Type(type = "json")
+    private Map<String, Object> weapon = new HashMap<>();
+
+    @Column(name = "maxhp")
     private Integer maxhp;
     @Column(name = "hp")
     private Integer hp;
@@ -45,9 +35,14 @@ public class Player implements Serializable {
     private Integer str;
     @Column(name = "speed")
     private Integer speed;
-    @Column(name = "dmg")
-    private Integer dmg;
+    @Column(name = "potions")
+    private Integer potions;
 
+    @Column(name = "dead", columnDefinition = "int2")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private Boolean dead;
 
-
+    public Integer calcGetAttacked(Integer dmg){
+        return this.hp-dmg;
+    }
 }
