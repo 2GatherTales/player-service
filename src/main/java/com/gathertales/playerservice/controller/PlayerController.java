@@ -89,7 +89,7 @@ public class PlayerController {
         }
     }
 
-    @PostMapping(value = "counter/{id}")
+    @PostMapping(value = "/counter/{id}")
     public ResponseEntity<Player> attack(@RequestBody String body, @PathVariable("id") Long id) {
         try {
             System.out.println(body);

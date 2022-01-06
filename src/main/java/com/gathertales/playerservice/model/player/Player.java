@@ -42,7 +42,13 @@ public class Player implements Serializable {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean dead;
 
-    public Integer calcGetAttacked(Integer dmg){
-        return this.hp-dmg;
+    public void calcGetAttacked(Integer dmg){
+        this.hp = (this.hp-dmg);
+        isPlayerDead();
+    }
+
+    public void isPlayerDead(){
+        if(this.hp<=0)
+            this.dead = true;
     }
 }
